@@ -2,7 +2,7 @@
   import {
     LogoutOutlined,
     // ProfileOutlined,
-    UserOutlined,
+    // UserOutlined,
   } from "@ant-design/icons-vue";
   const userStore = useUserStore();
   const { avatar, nickname } = storeToRefs(userStore);
@@ -44,12 +44,12 @@
     </span>
     <template #overlay>
       <a-menu @click="handleMenuClick">
-        <a-menu-item key="0">
+        <!-- <a-menu-item key="0">
           <template #icon>
             <UserOutlined />
           </template>
           <RouterLink to="/profile/index"> 个人中心 </RouterLink>
-        </a-menu-item>
+        </a-menu-item> -->
         <!-- <a-menu-item key="1">
           <template #icon>
             <ProfileOutlined />
@@ -61,7 +61,7 @@
             个人设置
           </a>
         </a-menu-item> -->
-        <a-menu-divider />
+        <!-- <a-menu-divider /> -->
         <a-menu-item key="logout">
           <template #icon>
             <LogoutOutlined />

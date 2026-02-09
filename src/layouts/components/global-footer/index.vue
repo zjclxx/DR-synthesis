@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import './index.less'
-import { CopyrightCircleOutlined } from '@ant-design/icons-vue'
-defineProps<{
-  copyright?: string
-}>()
+  import "./index.less";
+  import { CopyrightCircleOutlined } from "@ant-design/icons-vue";
+  defineProps<{
+    copyright?: string;
+  }>();
 
-const prefixCls = shallowRef('ant-pro-global-footer')
+  const prefixCls = shallowRef("ant-pro-global-footer");
 </script>
 
 <template>

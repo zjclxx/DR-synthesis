@@ -53,24 +53,13 @@
     // 最后，如果用户拒绝了通知，并且你想尊重用户的选择，则无需再打扰他们
   };
   // const router = useRouter();
-  const onOpenLik = (id: string) => {
-    // router.push({
-    //   path: "/form/edit",
-    //   query: {
-    //     id,
-    //   },
-    // });
-    text.value = id;
-  };
 
-  const text = ref<string>("初始值");
+  const text = ref<string>("这是首页");
 </script>
 
 <template>
   <div p-2>
     {{ text }}
     <a-button @click="openNotification"> Notification </a-button>
-    <a-button @click="onOpenLik('111')"> 按钮1 </a-button>
-    <a-button @click="onOpenLik('22')"> 按钮2 </a-button>
   </div>
 </template>

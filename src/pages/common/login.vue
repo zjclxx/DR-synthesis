@@ -14,8 +14,8 @@
   const { layoutSetting } = storeToRefs(appStore);
   const router = useRouter();
   const loginModel = reactive({
-    username: undefined,
-    password: undefined,
+    username: "admin",
+    password: "admin",
     mobile: undefined,
     code: undefined,
     type: "account",
@@ -110,7 +110,7 @@
         text-16px
         @click="
           appStore.toggleTheme(
-            layoutSetting.theme === 'dark' ? 'light' : 'dark'
+            layoutSetting.theme === 'dark' ? 'light' : 'dark',
           )
         ">
         <!-- 亮色和暗黑模式切换按钮 -->
@@ -127,19 +127,22 @@
         <div class="ant-pro-form-login-top">
           <div class="ant-pro-form-login-header">
             <span class="ant-pro-form-login-logo">
-              <img src="/logo.svg" />
+              <!-- <img src="/logo.svg" /> -->
+              <img :src="layoutSetting.logo" alt="logo" />
             </span>
-            <span class="ant-pro-form-login-title"> Ant Design </span>
+            <span class="ant-pro-form-login-title">
+              {{ layoutSetting.title }}
+            </span>
           </div>
           <div class="ant-pro-form-login-desc">
-            Ant Design 是西湖区最具影响力的 Web 设计规范
+            {{ layoutSetting.title }} 是苏州市最具影响力的 Web 设计规范
           </div>
         </div>
         <div class="ant-pro-form-login-main" w-335px>
           <a-form ref="formRef" :model="loginModel">
             <a-tabs v-model:activeKey="loginModel.type" centered>
               <a-tab-pane key="account" tab="账户密码登录" />
-              <a-tab-pane key="mobile" tab="手机号登录" />
+              <!-- <a-tab-pane key="mobile" tab="手机号登录" /> -->
             </a-tabs>
             <template v-if="loginModel.type === 'account'">
               <a-form-item
@@ -222,7 +225,7 @@
               <a-checkbox v-model:checked="loginModel.remember">
                 自动登录
               </a-checkbox>
-              <a>忘记密码 ?</a>
+              <!-- <a>忘记密码 ?</a> -->
             </div>
             <a-button
               type="primary"

@@ -1,15 +1,15 @@
 import type { LayoutSetting } from "~@/stores/app";
 
 export default {
-  title: "Lxx",
-  theme: "light",
+  title: "DR 合成系统",
+  theme: "inverted",
   isShowChangeTheme: false,
   logo: "/logo.svg",
   // logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   collapsed: false,
   drawerVisible: false,
   colorPrimary: "#1677FF",
-  layout: "mix",
+  layout: "side",
   contentWidth: "Fluid",
   fixedHeader: false,
   fixedSider: true,
@@ -22,10 +22,10 @@ export default {
   multiTab: false,
   multiTabFixed: false,
   headerHeight: 48,
-  copyright: "这是一个copyright文字",
-  waterMarkWord: "lxx",
+  copyright: "copyright DR 合成系统",
+  waterMarkWord: "DR 合成系统",
   isShowUserAvatar: true,
   isShowSettingDrawerIcon: true,
-  isShowWaterMark: false,
+  isShowWaterMark: true,
   accordionMode: true,
 } as LayoutSetting;

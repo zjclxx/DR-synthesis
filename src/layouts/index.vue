@@ -26,7 +26,7 @@
       "layout",
       "footer",
       "contentWidth",
-    ])
+    ]),
   );
 </script>
 
@@ -65,14 +65,18 @@
       :content="layoutSetting.waterMarkWord">
       <RouterView>
         <template #default="{ Component }">
-          <component :is="Component" />
+          <Transition appear name="slide-fadein-right" mode="out-in">
+            <component :is="Component" />
+          </Transition>
         </template>
       </RouterView>
     </a-watermark>
     <template v-else>
       <RouterView>
         <template #default="{ Component }">
-          <component :is="Component" />
+          <Transition appear name="slide-fadein-right" mode="out-in">
+            <component :is="Component" />
+          </Transition>
         </template>
       </RouterView>
     </template>

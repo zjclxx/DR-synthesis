@@ -1,5 +1,5 @@
 <template>
-  <div>zheshi profile</div>
+  <div>这是物料管理</div>
 </template>
 
 <script setup lang="ts"></script>
