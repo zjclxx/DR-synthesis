@@ -16,7 +16,7 @@
       <h4 my-10px text-18px>功能亮点</h4>
 
       <ul mt-32px space-y-10px>
-        <li v-for="item in contentList" :key="item.name" text-16px>
+        <li v-for="item in introContentList" :key="item.name" text-16px>
           <RouterLink :to="item.path" font-500>{{ item.name }}</RouterLink>
           <span font-500> ：</span>
           <span>{{ item.description }}</span>
@@ -27,20 +27,17 @@
 </template>
 
 <script setup lang="ts">
-  enum SystemStatus {
-    Running = 1,
-    Paused = 0,
-  }
+  import { SystemStatus, systemStatusList } from "@/config/global";
+  import { introContentList } from "./data";
 
   const status = ref<SystemStatus>(SystemStatus.Running);
 
   const statusText = computed(() => {
-    switch (status.value) {
-      case SystemStatus.Running:
-        return "运行中";
-      default:
-        return "暂停中";
+    const item = systemStatusList.find((item) => item.key === status.value);
+    if (item) {
+      return item.name;
     }
+    return systemStatusList[0].name;
   });
 
   const systemStatusClass = computed(() => {
@@ -51,24 +48,6 @@
         return "paused-status";
     }
   });
-
-  const contentList = [
-    {
-      name: "物料管理",
-      description: "支持多行文本一键粘贴识别，自动分类排序。",
-      path: "/material",
-    },
-    {
-      name: "工艺管理",
-      description: "动态时间轴，温度范围自动取中值，可视化折线图。",
-      path: "/process",
-    },
-    {
-      name: "配方管理",
-      description: "Fox方程自动计算Tg，配方阶段与工艺图实时高亮联动。",
-      path: "/recipe",
-    },
-  ];
 </script>
 
 <style lang="less" scoped>

@@ -26,6 +26,6 @@ export default {
   waterMarkWord: "RD 合成系统",
   isShowUserAvatar: true,
   isShowSettingDrawerIcon: true,
-  isShowWaterMark: true,
+  isShowWaterMark: false,
   accordionMode: true,
 } as LayoutSetting;

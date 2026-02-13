@@ -48,6 +48,7 @@ declare module '@vue/runtime-core' {
     ASwitch: typeof import('ant-design-vue/es')['Switch']
     ATabPane: typeof import('ant-design-vue/es')['TabPane']
     ATabs: typeof import('ant-design-vue/es')['Tabs']
+    ATextarea: typeof import('ant-design-vue/es')['Textarea']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     AUpload: typeof import("ant-design-vue/es")["Upload"]
     AUploadDragger: typeof import("ant-design-vue/es")["UploadDragger"]

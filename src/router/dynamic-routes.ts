@@ -32,7 +32,7 @@ export default [
       title: "物料管理",
       icon: "BarsOutlined",
     },
-    component: () => import("~/pages/profile/index.vue"),
+    component: () => import("~/pages/material/index.vue"),
   },
   {
     path: "/process",
