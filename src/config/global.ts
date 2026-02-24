@@ -68,3 +68,8 @@ export const systemStatusList: SystemStatusItem[] = [
     name: "暂停中",
   },
 ];
+
+/**
+ * @description localStorage中物料列表的key
+ */
+export const LOCAL_MATERIAL_LIST_KEY: string = "localMaterialList";

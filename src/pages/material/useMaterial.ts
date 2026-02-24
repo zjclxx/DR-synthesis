@@ -2,7 +2,11 @@ import { TableColumnType, Modal, message } from "ant-design-vue";
 import { IMaterialItem } from "./model";
 import { buildUUID } from "~@/utils/uuid";
 import { isNumberByRegex } from "~@/utils/tools";
-import { materialTypeList, MaterialType } from "~@/config/global";
+import {
+  materialTypeList,
+  MaterialType,
+  LOCAL_MATERIAL_LIST_KEY,
+} from "~@/config/global";
 import { cloneDeep } from "lodash-es";
 import type { UnwrapRef } from "vue";
 import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
@@ -81,24 +85,11 @@ export default function useMaterial() {
     },
   ];
 
-  const tableData = ref<IMaterialItem[]>([
-    {
-      uuid: "hfdksh",
-      code: "134054",
-      shortName: "1",
-      fullName: "一",
-      category: MaterialType.Monomer,
-      tg: 43.5,
-      acidValue: undefined,
-      glyoxylateValue: undefined,
-    },
-  ]);
+  const tableData = ref<IMaterialItem[]>([]);
 
   const tableSelectKeys = ref<string[]>([]);
   const handleTableSelectChange = (selectedRowKeys: string[]) => {
-    console.log("selectedRowKeys", selectedRowKeys);
     tableSelectKeys.value = selectedRowKeys;
-    console.log("tableSelectKeys", tableSelectKeys.value);
   };
 
   const selectTableRowLength = computed(() => tableSelectKeys.value.length);
@@ -157,6 +148,55 @@ export default function useMaterial() {
     });
   };
 
+  const handleTableAdd = () => {
+    const id = buildUUID();
+    const item = {
+      uuid: id,
+      code: "",
+      shortName: "",
+      fullName: "",
+      category: undefined,
+      tg: undefined,
+      acidValue: undefined,
+      glyoxylateValue: undefined,
+    };
+    tableData.value.push(item);
+    editableData[id] = cloneDeep(item);
+  };
+
+  const handlSaveTableDataToLocalStorage = () => {
+    localStorage.setItem(
+      LOCAL_MATERIAL_LIST_KEY,
+      JSON.stringify(tableData.value),
+    );
+  };
+
+  const handleLoadTableDataFromLocalStorage = () => {
+    const localData = localStorage.getItem(LOCAL_MATERIAL_LIST_KEY);
+    if (localData) {
+      try {
+        tableData.value = JSON.parse(localData);
+      } catch (e) {
+        console.error("从本地存储转化数据失败", e);
+      }
+    }
+  };
+
+  onBeforeMount(() => {
+    handleLoadTableDataFromLocalStorage();
+  });
+
+  onMounted(() => {
+    // 第一次加载时，如果有数据必定会触发watch，所以可以等数据初始化结束后再生成监听
+    watch(
+      () => tableData.value,
+      () => {
+        handlSaveTableDataToLocalStorage();
+      },
+      { deep: true },
+    );
+  });
+
   return {
     textareaExampleText,
     importText,
@@ -172,5 +212,6 @@ export default function useMaterial() {
     handleTableSave,
     handleTableCancel,
     handleTableDeleteSelected,
+    handleTableAdd,
   };
 }

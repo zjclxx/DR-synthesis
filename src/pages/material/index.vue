@@ -19,7 +19,11 @@
     </div>
 
     <div mt-24px flex flex-wrap gap-x-12px>
-      <a-button type="primary" class="bg-#28a745" hover="!bg-#22bc45">
+      <a-button
+        type="primary"
+        class="bg-#28a745"
+        hover="!bg-#22bc45"
+        @click="handleTableAdd">
         <PlusOutlined />
         新增物料
       </a-button>
@@ -131,6 +135,7 @@
     handleTableSave,
     handleTableCancel,
     handleTableDeleteSelected,
+    handleTableAdd,
   } = useMaterial();
 </script>
 
