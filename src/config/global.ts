@@ -1,9 +1,24 @@
 export const enum MaterialType {
-  Monomer = 1, //单体
-  Solvent = 2, //溶剂
-  Initiator = 3, //引发剂
-  Auxiliary = 4, //助剂
-  Resin = 5, //树脂
+  /**
+   * 单体
+   */
+  Monomer = 1,
+  /**
+   * 溶剂
+   */
+  Solvent = 2,
+  /**
+   * 引发剂
+   */
+  Initiator = 3,
+  /**
+   * 助剂
+   */
+  Auxiliary = 4,
+  /**
+   * 树脂
+   */
+  Resin = 5,
 }
 
 interface MaterialTypeItem {
