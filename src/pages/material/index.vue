@@ -15,9 +15,17 @@
             <a-button type="primary" @click="handleAutoRecognition"
               >一键识别</a-button
             >
-            <a-button type="primary" @click="handleImportJson"
-              >导入json</a-button
-            >
+
+            <a-upload
+              :showUploadList="false"
+              :before-upload="handleBeforeJsonUpload"
+              accept="application/json"
+              :maxCount="1"
+              @change="handleJsonFileChange">
+              <a-button type="primary" :loading="importBtnLoading"
+                >导入json</a-button
+              >
+            </a-upload>
           </div>
         </div>
       </div>
@@ -140,6 +148,7 @@
     rowSelection,
     selectTableRowLength,
     editableData,
+    importBtnLoading,
     handleTableEdit,
     handleTableDelete,
     handleAutoRecognition,
@@ -149,7 +158,8 @@
     handleTableDeleteSelected,
     handleTableAdd,
     handleTableExportSelected,
-    handleImportJson,
+    handleBeforeJsonUpload,
+    handleJsonFileChange,
   } = useMaterial();
 </script>
 

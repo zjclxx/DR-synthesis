@@ -52,7 +52,7 @@ declare module '@vue/runtime-core' {
     ATabs: typeof import('ant-design-vue/es')['Tabs']
     ATextarea: typeof import('ant-design-vue/es')['Textarea']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
-    AUpload: typeof import("ant-design-vue/es")["Upload"]
+    AUpload: typeof import('ant-design-vue/es')['Upload']
     AUploadDragger: typeof import("ant-design-vue/es")["UploadDragger"]
     AWatermark: typeof import('ant-design-vue/es')['Watermark']
     CarbonMoon: typeof import('./../src/components/icons/carbon-moon.vue')['default']

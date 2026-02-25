@@ -73,3 +73,5 @@ export const systemStatusList: SystemStatusItem[] = [
  * @description localStorage中物料列表的key
  */
 export const LOCAL_MATERIAL_LIST_KEY: string = "localMaterialList";
+
+export const IMPORT_EXPORT_JSON_CONTENT_KEY = "lxx_json_unique_key";

@@ -1,12 +1,20 @@
-import { TableColumnType, Modal, message } from "ant-design-vue";
+import {
+  TableColumnType,
+  Modal,
+  message,
+  UploadChangeParam,
+  UploadProps,
+  Upload,
+} from "ant-design-vue";
 import { IMaterialItem } from "./model";
 import { buildUUID } from "~@/utils/uuid";
 import { isNumberByRegex } from "~@/utils/tools";
-import { downloadJson } from "~@/utils/json";
+import { downloadJson, importJsonFile } from "~@/utils/json";
 import {
   materialTypeList,
   MaterialType,
   LOCAL_MATERIAL_LIST_KEY,
+  IMPORT_EXPORT_JSON_CONTENT_KEY,
 } from "~@/config/global";
 import { cloneDeep } from "lodash-es";
 import type { UnwrapRef } from "vue";
@@ -169,8 +177,11 @@ export default function useMaterial() {
     const selectedList: IMaterialItem[] = tableData.value.filter((x) =>
       tableSelectKeys.value.includes(x.uuid),
     );
+    const specialCombinationObj = {
+      [IMPORT_EXPORT_JSON_CONTENT_KEY]: selectedList,
+    };
     const keepUndefinedJson: string = JSON.stringify(
-      selectedList,
+      specialCombinationObj,
       (_key, value) => {
         if (value === undefined) {
           return "undefined"; // 将undefined转换为字符串
@@ -180,8 +191,6 @@ export default function useMaterial() {
     );
     downloadJson(keepUndefinedJson, "物料导出");
   };
-
-  const handleImportJson = () => {};
 
   const handlSaveTableDataToLocalStorage = () => {
     localStorage.setItem(
@@ -199,6 +208,65 @@ export default function useMaterial() {
         console.error("从本地存储转化数据失败", e);
       }
     }
+  };
+
+  const importBtnLoading = ref<boolean>(false);
+  // 导入json文件内容
+  const handleJsonFileChange = async (info: UploadChangeParam) => {
+    try {
+      importBtnLoading.value = true;
+      const jsonContent = await importJsonFile(info.file as unknown as File);
+      // 提取公共错误提示方法
+      const showError = () => {
+        message.error("导入失败，请检查文件内容是否正确");
+      };
+
+      // 主逻辑优化
+      if (typeof jsonContent !== "object" || jsonContent === null) {
+        showError();
+        return;
+      }
+
+      const jsonArray = jsonContent[
+        IMPORT_EXPORT_JSON_CONTENT_KEY
+      ] as IMaterialItem[]; // 显式断言类型
+
+      // 校验 jsonArray 是否为数组且不为空
+      if (!Array.isArray(jsonArray) || jsonArray.length === 0) {
+        showError();
+        return;
+      }
+
+      jsonArray.forEach((item) => {
+        const singleItem: IMaterialItem = {
+          uuid: buildUUID(),
+          code: item.code,
+          shortName: item.shortName,
+          fullName: item.fullName,
+          category: item.category,
+          tg: item.tg,
+          acidValue: item.acidValue,
+          glyoxylateValue: item.glyoxylateValue,
+        };
+        tableData.value.push(singleItem);
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        message.error(error.message || "导入失败");
+      } else {
+        message.error("导入失败，请检查文件格式是否正确");
+      }
+    } finally {
+      importBtnLoading.value = false;
+    }
+  };
+  // 控制上传文件的格式
+  const handleBeforeJsonUpload: UploadProps["beforeUpload"] = (file) => {
+    if (file.type !== "application/json") {
+      message.error("请上传JSON文件");
+      return Upload.LIST_IGNORE;
+    }
+    return false;
   };
 
   onBeforeMount(() => {
@@ -224,6 +292,7 @@ export default function useMaterial() {
     rowSelection,
     selectTableRowLength,
     editableData,
+    importBtnLoading,
     handleTableEdit,
     handleTableDelete,
     handleAutoRecognition,
@@ -233,6 +302,7 @@ export default function useMaterial() {
     handleTableDeleteSelected,
     handleTableAdd,
     handleTableExportSelected,
-    handleImportJson,
+    handleJsonFileChange,
+    handleBeforeJsonUpload,
   };
 }
